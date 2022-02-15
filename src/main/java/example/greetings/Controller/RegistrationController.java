@@ -6,6 +6,7 @@ import example.greetings.Models.User;
 import example.greetings.interfaces.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -26,12 +27,12 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    public String addUser(User user, Map<String, Object> model){
+    public String addUser(User user, Model model){
 
         User userFromDB = userRepo.findByUsername(user.getUsername());
 
         if (userFromDB != null ){
-            model.put("message", "User exists!");
+            model.addAttribute("message", "User exists!");
             return "register";
         }
 
@@ -41,4 +42,9 @@ public class RegistrationController {
 
         return"redirect:/login";
     }
+
+//    @GetMapping("/login")
+//    public String login(){
+//        return "login";
+//    }
 }
