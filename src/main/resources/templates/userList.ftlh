@@ -20,4 +20,5 @@
             </#list>
         </tbody>
     </table>
+    <a href="main">back to main page</a>
 </@c.page>

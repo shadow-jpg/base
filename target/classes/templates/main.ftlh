@@ -3,6 +3,7 @@
 <@c.page>
 <div>
 <@l.logout />
+    <a href="/chat">chat</a>
     <span><a href="/user">User list</a>
 </div>
         <form method="post">
