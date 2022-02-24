@@ -8,3 +8,6 @@ Added service for AutoReocognition of users in messages
 ADDED templates
 
 ADDED Admin panel
+
+
+ADDED STYLES
