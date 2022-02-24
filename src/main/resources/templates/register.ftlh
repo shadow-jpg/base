@@ -3,6 +3,9 @@
 
 <@c.page>
 add new user
-    ${message?ifExists}
+    <div class ="alert-danger" roles="alert">
+        ${message?ifExists}
+    </div>
+
 <@l.login "/register" true />
 </@c.page>

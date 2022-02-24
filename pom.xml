@@ -18,13 +18,13 @@
 
 
 <!--        mail delete-->
-        <property name="javaMailProperties">
-            <props>
-                <prop key="mail.smtp.auth">true</prop>
-                <prop key="mail.debug">true</prop>
-                <prop key="mail.smtp.starttls.enable">true</prop>
-            </props>
-        </property>
+<!--        <property name="javaMailProperties">-->
+<!--&lt;!&ndash;            <props>&ndash;&gt;-->
+<!--&lt;!&ndash;                <prop key="mail.smtp.auth">true</prop>&ndash;&gt;-->
+<!--&lt;!&ndash;                <prop key="mail.debug">true</prop>&ndash;&gt;-->
+<!--&lt;!&ndash;                <prop key="mail.smtp.starttls.enable">true</prop>&ndash;&gt;-->
+<!--&lt;!&ndash;            </props>&ndash;&gt;-->
+<!--        </property>-->
 
         <!--        -->
     </properties>
@@ -93,12 +93,20 @@
             <artifactId>spring-boot-starter-reactor-netty</artifactId>
         </dependency>
 <!--webSockets-->
+
 <!--        mail-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 <!--        mail-->
+
+<!--session-->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-jdbc</artifactId>
+        </dependency>
+<!--       session-->
     </dependencies>
 
     <build>

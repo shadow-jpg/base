@@ -4,8 +4,11 @@ import javax.persistence.*;
 
 import example.greetings.Models.User;
 
+import java.util.Set;
+
 @Entity
 public class Message {
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
@@ -19,6 +22,7 @@ public class Message {
     private User author;
 
     private String filename;
+
 
     public  Message(){
 

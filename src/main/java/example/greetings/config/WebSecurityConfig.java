@@ -47,6 +47,8 @@ import javax.sql.DataSource;
                         .antMatchers("/main","/chat").authenticated()
                         .anyRequest().authenticated()
                     .and()
+                        .rememberMe()
+                    .and()
                         .formLogin()
                         .loginPage("/login")
                         .permitAll()
