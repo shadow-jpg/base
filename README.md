@@ -25,4 +25,6 @@ added panel of user
 
 added edition mode
 
-delete mode
+Added delete mode
+
+Added delete of files not everywhere
