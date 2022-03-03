@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -38,6 +39,51 @@ public class MainController {
 
     @Value("${delete.path}")
     private  String deletepath;
+
+
+
+
+
+
+    private void saveFile(MultipartFile file, Message message) throws IOException {
+        if (file != null && !file.getOriginalFilename().isEmpty()){
+
+            File fileDir =new File(uploadpath);
+            if (!fileDir.exists()){
+
+                fileDir.mkdir();
+            }
+
+            String uuidFile= UUID.randomUUID().toString();
+            String resultFilename =uuidFile+"."+ file.getOriginalFilename();
+
+            file.transferTo(new File(uploadpath+"/"+resultFilename));
+            message.setFilename(resultFilename);
+        }
+    }
+
+    private void deleteFile(@NotNull String fileName) throws IOException {
+        if (fileName != null){
+            Files.deleteIfExists(Paths.get(deletepath+"\\"+fileName));
+        }
+    }
+
+    //удаляю по message.id  сам file
+    private void fileRemove(Long id) throws IOException {
+        Message message = messageRepo.findById(id).get();
+        String filename =message.getFilename();
+        if (filename != null){
+            Files.deleteIfExists(Paths.get(deletepath+"\\"+filename));
+        }
+    }
+
+
+
+
+
+
+
+
 
     @GetMapping("/")
     public String greeting(
@@ -84,28 +130,7 @@ public class MainController {
 
     }
 
-    private void saveFile(MultipartFile file, Message message) throws IOException {
-        if (file != null && !file.getOriginalFilename().isEmpty()){
 
-            File fileDir =new File(uploadpath);
-            if (!fileDir.exists()){
-
-                fileDir.mkdir();
-            }
-
-            String uuidFile= UUID.randomUUID().toString();
-            String resultFilename =uuidFile+"."+ file.getOriginalFilename();
-
-            file.transferTo(new File(uploadpath+"/"+resultFilename));
-            message.setFilename(resultFilename);
-        }
-    }
-
-    private void deleteFile(@NotNull String fileName) throws IOException {
-        if (fileName != null){
-            Files.deleteIfExists(Paths.get(deletepath+"\\"+fileName));
-        }
-    }
 
     @GetMapping("/chat")
     public String chat(@AuthenticationPrincipal User user,
@@ -182,14 +207,14 @@ public class MainController {
     public String userDelete(@AuthenticationPrincipal User CurrentUser,
                              @PathVariable User user,
                              Model model,
-                             @RequestParam(value = "message") Long id){
+                             @RequestParam(value = "message") Long id) throws IOException {
 
         if(CurrentUser.isAdmin()){
-            
+            fileRemove(id);
             messageRepo.deleteById(id);
 
         } else if(CurrentUser.equals(user)){
-
+            fileRemove(id);
             messageRepo.deleteById(id);
         }
 
@@ -199,15 +224,4 @@ public class MainController {
 
 
 
-
-
-
-
-
-
-
-    @GetMapping("/ps")
-    public String ps(){
-        return "ps";
-    }
 }

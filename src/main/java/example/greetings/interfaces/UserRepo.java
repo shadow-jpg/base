@@ -8,5 +8,5 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     User findByActivationCode(String code);
 
-    User findByid(Long usId);
+//    User findByid(Long usId);
 }
