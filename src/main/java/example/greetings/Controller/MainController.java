@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -152,11 +151,10 @@ public class MainController {
 
         if(message==null) {
 //            if(filter != null && !filter.isEmpty()){
-//                message =messageRepo.findByTag(filter);
+//               Iterable<Message> messageOf =messageRepo.findByTag(filter);
 //            }else{
-//                message =messageRepo.findAll();
+//                Iterable<Message> messageOf =messageRepo.findAll();
 //            }
-//            model.addAttribute("messages", messages);
 //            model.addAttribute("filter", filter);
 
             model.addAttribute("messages", messages);
@@ -175,9 +173,9 @@ public class MainController {
     public String updateMessage(@AuthenticationPrincipal User currentUser,
                                 @PathVariable User user,
                                 @RequestParam(value = "id",required = false) Message message,
-                                @RequestParam("text") String text,
-                                @RequestParam("tag") String tag,
-                                @RequestParam("file") MultipartFile file) throws IOException {
+                                @RequestParam(value= "text", required = false) String text,
+                                @RequestParam(value ="tag",required = false) String tag,
+                                @RequestParam(value = "file",required = false) MultipartFile file) throws IOException {
         if(message.getAuthor().equals(currentUser)){
             if(!StringUtils.isNullOrEmpty(text)){
                 message.setText(text);
@@ -186,11 +184,13 @@ public class MainController {
             if(!StringUtils.isNullOrEmpty(tag)){
                 message.setTag(tag);
             }
-            if(message.getFilename()!=null){
-                deleteFile(message.getFilename());
-                saveFile(file, message);
-            }else{
-                saveFile(file, message);
+            if (!file.isEmpty()) {
+                if (message.getFilename() != null) {
+                    deleteFile(message.getFilename());
+                    saveFile(file, message);
+                } else {
+                    saveFile(file, message);
+                }
             }
             messageRepo.save(message);
         }
@@ -198,10 +198,6 @@ public class MainController {
         return "redirect:/userMessages/"+user.getId();
 
     }
-
-
-
-
 
     @GetMapping(value = "/userDelete/{user}")
     public String userDelete(@AuthenticationPrincipal User CurrentUser,
@@ -220,8 +216,5 @@ public class MainController {
 
         return "redirect:/userMessages/"+user.getId();
     }
-
-
-
 
 }

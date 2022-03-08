@@ -13,8 +13,5 @@ public interface MessageRepo  extends CrudRepository<Message, Long> {
     Optional<Message> findById(Long id);
 
     @Override
-    Iterable<Message> findAllById(Iterable<Long> longs);
-
-    @Override
     void deleteById(Long id);
 }

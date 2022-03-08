@@ -1,9 +1,10 @@
 <#import "parts/common.ftlh" as c>
 <#include "parts/security.ftlh">
 <@c.page>
-
-    <#if isCurrentUser>
-        <#include "parts/postRedactor.ftlh">
+    <#if message??>
+        <#if isCurrentUser>
+            <#include "parts/postRedactor.ftlh">
+        </#if>
     </#if>
     <div class="form-row">
         <div class="form-group col-md-6">

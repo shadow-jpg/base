@@ -27,4 +27,4 @@ added edition mode
 
 Added delete mode
 
-Added delete of files not everywhere
+Added delete of files in delete mode and edit mode if they exists

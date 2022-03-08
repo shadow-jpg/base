@@ -2,7 +2,11 @@ package example.greetings.Models;
 
 import javax.persistence.*;
 
+import com.sun.istack.NotNull;
 import example.greetings.Models.User;
+import net.bytebuddy.implementation.bind.annotation.Default;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Set;
 
@@ -22,6 +26,11 @@ public class Message {
 
     private String filename;
 
+
+    // не пашет авто распределение 1
+    @Value("${visibility}")
+    @NotNull
+    private boolean visibility;
 
 
     public  Message(){
@@ -46,6 +55,13 @@ public class Message {
         this.tag = tag;
     }
 
+    public boolean isVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(boolean visibility) {
+        this.visibility = visibility;
+    }
 
     public void setText(String text) {
         this.text = text;
